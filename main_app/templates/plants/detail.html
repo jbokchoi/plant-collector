@@ -3,16 +3,15 @@
 
 <h1>Plant List</h1>
 
-{% for plant in plants %}
     <div class="card">
-        <a href="{% url 'detail' plant.id %}">
             <div class="card-content">
                 <span class="card-title">{{ plant.name }}</span>
                 <p>Type: {{ plant.species }}</p>
                 <p>Description: {{ plant.description }}</p>
+                <p>Light: {{ plant.light }}</p>
+                <p>Water: {{ plant.water }}</p>
+                <p>Humidity: {{ plant.humidity }}</p>
             </div>
-        </a>
     </div>
-{% endfor %}
 
 {% endblock %}
