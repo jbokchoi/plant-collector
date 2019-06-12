@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Plant List</h1>
-
-    <div class="card">
+<h1>Plant Details</h1>
+<div class="row">
+    <div class="col s6">
+        <div class="card">
             <div class="card-content">
                 <span class="card-title">{{ plant.name }}</span>
                 <p>Type: {{ plant.species }}</p>
@@ -12,6 +13,49 @@
                 <p>Water: {{ plant.water }}</p>
                 <p>Humidity: {{ plant.humidity }}</p>
             </div>
+            <div class="card-action">
+                <a href="{% url 'plants_update' plant.id %}">Edit</a>
+                <a href="{% url 'plants_delete' plant.id %}">Delete</a>
+            </div>
+        </div>
     </div>
+    <div class="col s6">
+        <form action="{% url 'add_feeding' plant.id %}" method="post">
+            {% csrf_token %}
+            {{ feeding_form.as_p }}
+            <input type="submit" class="btn" value="Add Feeding">
+        </form>
+        <br>
+        {% if plant.fed_for_today %}
+          <div class="card-panel teal-text center-align">{{plant.name}} is feeling good today</div>
+        {% else %}
+          <div class="card-panel red-text center-align">{{plant.name}} might need some attention</div>
+        {% endif %}   
+        <table class="striped">
+            <thead>
+                <tr><th>Date</th><th>Meal</th></tr>
+            </thead>
+            <tbody>
+                {% for feeding in plant.feeding_set.all %}
+                <tr>
+                    <td>{{feeding.date}}</td>
+                    <td>{{feeding.get_meal_display}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>    
+<script>
+    var dateEl = document.getElementById('id_date');
+    M.Datepicker.init(dateEl, {
+        format: 'yyyy-mm-dd',
+        defaultDate: new Date(),
+        setDefaultDate: true,
+        autoClose: true
+    });
 
+    var selectEl = document.getElementById('id_meal');
+    M.FormSelect.init(selectEl);  
+</script>
 {% endblock %}
