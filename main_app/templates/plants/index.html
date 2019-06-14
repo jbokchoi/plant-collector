@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Plant List</h1>
+<h1>My Plants</h1>
 
 {% for plant in plants %}
     <a href="{% url 'detail' plant.id %}">

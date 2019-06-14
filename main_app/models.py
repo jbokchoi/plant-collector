@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User
 
 MEALS = (
   ('W', 'Water'),
@@ -27,6 +28,7 @@ class Plant(models.Model):
     water = models.CharField(max_length=100, default='When soil is dry')
     humidity = models.CharField(max_length=100, default='Any humidity will do!')
     accessories = models.ManyToManyField(Accessory)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

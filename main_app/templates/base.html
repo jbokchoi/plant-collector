@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Plant Collector</title>
+    <title>Plant Minder</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -15,14 +15,20 @@
         <nav>
             <div class="nav-wrapper green darken-4">
                 <ul>
-                    <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Plant Collector</a></li>
+                    <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Plant Minder</a></li>
                 </ul>
                 <ul class="right">
                     <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'accessories_create' %}">Add an Accessory</a></li>
-                    <li><a href="{% url 'accessories_index' %}">View All Accessories</a></li>
-                    <li><a href="{% url 'plants_create' %}">Add a Plant</a></li>
-                    <li><a href="{% url 'index' %}">View All Plants</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'accessories_create' %}">Add an Accessory</a></li>
+                        <li><a href="{% url 'accessories_index' %}">View All Accessories</a></li>
+                        <li><a href="{% url 'plants_create' %}">Add a Plant</a></li>
+                        <li><a href="{% url 'index' %}">View All Plants</a></li>
+                        <li><a href="{% url 'logout' %}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                        <li><a href="{% url 'login' %}">Log In</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -32,7 +38,7 @@
         {% endblock %}
     </main>
   	 <footer class="page-footer green darken-4">
-       <div class="right">All Rights Reserved, &copy; 2019 Plant Collector &nbsp;</div>
+       <div class="right">All Rights Reserved, &copy; 2019 Plant Minder &nbsp;</div>
     </footer>
 </body>
 </html>
